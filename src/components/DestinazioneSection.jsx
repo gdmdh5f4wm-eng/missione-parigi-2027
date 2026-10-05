@@ -36,6 +36,54 @@ export default function DestinazioneSection() {
             <CardAction>Accedi ➔</CardAction>
           </CardOverlay>
         </Card>
+        <Card to="/volo">
+          <img
+            src="/image/aereo-linea.jpg"
+            alt="Volo"
+            onError={(e) => {
+              if (e.target.src.indexOf(".jpg.jpg") === -1) {
+                e.target.src = "/image/aereo-linea.jpg.jpg"
+              }
+            }}
+          />
+          <CardOverlay>
+            <CardBadge>FASE 2</CardBadge>
+            <CardTitle>VOLO</CardTitle>
+            <CardAction>Accedi ➔</CardAction>
+          </CardOverlay>
+        </Card>
+        <Card to="/alloggio">
+          <img
+            src="/image/casa-1.jpeg"
+            alt="Alloggio"
+            onError={(e) => {
+              if (e.target.src.indexOf(".jpg") === -1) {
+                e.target.src = "/image/casa-1.jpg"
+              }
+            }}
+          />
+          <CardOverlay>
+            <CardBadge>FASE 3</CardBadge>
+            <CardTitle>ALLOGGIO</CardTitle>
+            <CardAction>Accedi ➔</CardAction>
+          </CardOverlay>
+        </Card>
+        <Card to="/disneyland">
+          <img
+            src="/image/entrata-parco.jpg"
+            alt="Disneyland"
+            onError={(e) => {
+              if (e.target.src.indexOf("entrata%20parco.jpg") === -1) {
+                e.target.src = "/image/entrata%20parco.jpg"
+              }
+            }}
+          />
+          <CardOverlay>
+            <CardBadge>FASE 4</CardBadge>
+            <CardTitle>DISNEYLAND</CardTitle>
+            <CardAction>Accedi ➔</CardAction>
+          </CardOverlay>
+        </Card>
       </Grid>
     </Container>
   )
@@ -82,7 +130,8 @@ const Card = styled(Link)`
   background: #090b13;
   transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
 
-  video {
+  video,
+  img {
     position: absolute;
     top: 0;
     left: 0;
@@ -99,7 +148,8 @@ const Card = styled(Link)`
     box-shadow: rgb(0 0 0 / 80%) 0px 40px 58px -16px,
       rgb(0 0 0 / 72%) 0px 30px 22px -10px;
 
-    video {
+    video,
+    img {
       transform: scale(1.04);
     }
   }

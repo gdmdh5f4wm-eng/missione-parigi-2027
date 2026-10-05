@@ -1,78 +1,36 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import styled, { keyframes } from "styled-components"
 import { Link } from "react-router-dom"
 
-const PARIS_PHOTOS = [
+const DISNEY_PHOTOS = [
   {
-    src: "/image/arco-con-vista-torre-eiffel.JPG.jpg",
-    fallbackSrc: "/images/arco-con-vista-torre-eiffel.JPG.jpg",
-    title: "TORRE EIFFEL"
+    src: "/image/entrata-parco.jpg",
+    fallbackSrc: "/image/entrata%20parco.jpg",
+    alt: "Entrata Parco Disneyland"
   },
   {
-    src: "/image/montmartre-base-cinematic.jpg",
-    fallbackSrc: "/image/montmartre-base-cinematic.jpg.jpg",
-    title: "MONTMARTRE"
+    src: "/image/castello-al-buoio.jpg",
+    fallbackSrc: "/image/castello%20al%20buoio.jpg",
+    alt: "Castello Disneyland al buio"
   },
   {
-    src: "/image/paris-louvre.jpg",
-    fallbackSrc: "/image/paris-louvre.jpg.jpg",
-    title: "LOUVRE"
+    src: "/image/castello-2.jpg",
+    fallbackSrc: "/image/castello%202.jpg",
+    alt: "Castello Disneyland 2"
   },
   {
-    src: "/image/paris-tuileries.jpg",
-    fallbackSrc: "/image/paris-tuileries.jpg.jpg",
-    title: "TUILERIES"
+    src: "/image/castello-3.jpg",
+    fallbackSrc: "/image/castello%203.jpg",
+    alt: "Castello Disneyland 3"
   },
   {
-    src: "/image/paris-notredame.jpg",
-    fallbackSrc: "/image/paris-notredame.jpg.jpg",
-    title: "NOTRE-DAME"
-  },
-  {
-    src: "/image/paris-seine.jpg",
-    fallbackSrc: "/image/paris-seine.jpg.jpg",
-    title: "SENNA"
-  },
-  {
-    src: "/image/paris-quartier-latin.jpg",
-    fallbackSrc: "/image/paris-quartier-latin.jpg.jpg",
-    title: "QUARTIERE LATINO"
+    src: "/image/imm-fatina.jpg",
+    fallbackSrc: "/image/imm.%20fatina.jpg",
+    alt: "Magia Disneyland"
   }
 ]
 
-const WHAT_WE_WILL_SEE = [
-  {
-    title: "TORRE EIFFEL",
-    desc: "Uno dei simboli di Parigi, il primo luogo che ci farà capire davvero di essere arrivati."
-  },
-  {
-    title: "MONTMARTRE",
-    desc: "Passeggeremo tra le strade di uno dei quartieri più caratteristici di Parigi."
-  },
-  {
-    title: "LOUVRE",
-    desc: "Visiteremo il Louvre e ci perderemo tra le sue sale."
-  },
-  {
-    title: "TUILERIES",
-    desc: "Una passeggiata attraverso i Giardini delle Tuileries."
-  },
-  {
-    title: "NOTRE-DAME",
-    desc: "Andremo a vedere Notre-Dame e la zona circostante."
-  },
-  {
-    title: "SENNA",
-    desc: "Passeggeremo lungo la Senna, godendoci alcuni degli scorci più belli della città."
-  },
-  {
-    title: "QUARTIERE LATINO",
-    desc: "Esploreremo il Quartiere Latino tra strade, piazze e atmosfera parigina."
-  }
-]
-
-export default function Destinazione() {
-  const videoRef = useRef(null)
+export default function Disneyland() {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
   const resumeTimerRef = useRef(null)
@@ -80,15 +38,6 @@ export default function Destinazione() {
   const touchStartYRef = useRef(0)
   const touchCurrentXRef = useRef(0)
   const isDraggingRef = useRef(false)
-
-  useEffect(() => {
-    // Autoplay kick for iOS Safari and mobile browsers
-    if (videoRef.current) {
-      videoRef.current.defaultMuted = true
-      videoRef.current.muted = true
-      videoRef.current.play().catch(() => {})
-    }
-  }, [])
 
   // Pause autoplay on manual interaction and re-activate 6 seconds after last interaction
   const pauseAndScheduleResume = () => {
@@ -102,13 +51,13 @@ export default function Destinazione() {
   }
 
   const goToNext = () => {
-    setCurrentPhotoIndex((prev) => (prev + 1) % PARIS_PHOTOS.length)
+    setCurrentPhotoIndex((prev) => (prev + 1) % DISNEY_PHOTOS.length)
     pauseAndScheduleResume()
   }
 
   const goToPrev = () => {
     setCurrentPhotoIndex(
-      (prev) => (prev - 1 + PARIS_PHOTOS.length) % PARIS_PHOTOS.length
+      (prev) => (prev - 1 + DISNEY_PHOTOS.length) % DISNEY_PHOTOS.length
     )
     pauseAndScheduleResume()
   }
@@ -118,12 +67,12 @@ export default function Destinazione() {
     pauseAndScheduleResume()
   }
 
-  // Automatic slideshow: changes slowly every 4.5 seconds with soft crossfade when not paused
+  // Automatic slow crossfade slideshow (4.5s) when not paused
   useEffect(() => {
     if (isPaused) return
 
     const timer = setInterval(() => {
-      setCurrentPhotoIndex((prev) => (prev + 1) % PARIS_PHOTOS.length)
+      setCurrentPhotoIndex((prev) => (prev + 1) % DISNEY_PHOTOS.length)
     }, 4500)
 
     return () => clearInterval(timer)
@@ -199,7 +148,7 @@ export default function Destinazione() {
     }
   }
 
-  // Scroll animations for standard content sections
+  // Scroll entrance transitions
   useEffect(() => {
     const elements = document.querySelectorAll("[data-animate]")
     const observer = new IntersectionObserver(
@@ -223,22 +172,19 @@ export default function Destinazione() {
 
   return (
     <PageContainer>
-      {/* Background Video */}
-      <VideoContainer>
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          poster="/images/destinazione-poster.jpg"
-        >
-          <source src="/video/video-destinazione.MP4" type="video/mp4" />
-          <source src="/videos/video-destinazione.mp4" type="video/mp4" />
-        </video>
-        <VideoOverlay />
-      </VideoContainer>
+      {/* Background Image: Strictly entrata parco */}
+      <BackgroundContainer>
+        <img
+          src="/image/entrata-parco.jpg"
+          alt="Entrata Parco Disneyland"
+          onError={(e) => {
+            if (e.target.src.indexOf("entrata%20parco.jpg") === -1) {
+              e.target.src = "/image/entrata%20parco.jpg"
+            }
+          }}
+        />
+        <BackgroundOverlay />
+      </BackgroundContainer>
 
       {/* Floating Back Navigation */}
       <NavWrapper>
@@ -260,15 +206,18 @@ export default function Destinazione() {
         </BackBtn>
       </NavWrapper>
 
-      {/* 1. APERTURA (Hero Section) */}
+      {/* 1. HERO CINEMATOGRAFICA (Hero) */}
       <HeroSection>
         <HeroContent>
-          <HeroTitle>PARIGI</HeroTitle>
-          <HeroDate>01 — 05 LUGLIO 2027</HeroDate>
+          <HeroTitle>DISNEYLAND</HeroTitle>
+          <HeroDate>02 LUGLIO 2027</HeroDate>
+          <HeroSubtitle>
+            Un giorno nel posto dove la magia prende vita.
+          </HeroSubtitle>
         </HeroContent>
 
         <ScrollHint>
-          <span>SCORRI PER ESPLORARE</span>
+          <span>SCORRI PER IL NOSTRO GIORNO</span>
           <svg
             width="18"
             height="18"
@@ -284,16 +233,30 @@ export default function Destinazione() {
         </ScrollHint>
       </HeroSection>
 
-      {/* 2. DESTINAZIONE */}
-      <DestinationSection data-animate>
-        <SectionBadge>DESTINAZIONE</SectionBadge>
-        <MainTitle>PARIGI, FRANCIA</MainTitle>
-        <Subtitle>Una città da vivere insieme.</Subtitle>
-      </DestinationSection>
+      {/* 2. IL NOSTRO GIORNO */}
+      <DaySection data-animate>
+        <SectionBadge>IL NOSTRO GIORNO</SectionBadge>
+        <DayHeading>VENERDÌ 02 LUGLIO 2027</DayHeading>
+        <FormulaBadge>1 GIORNO · 2 PARCHI</FormulaBadge>
 
-      {/* 3. FOTOGRAFIE DI PARIGI (Scorrimento Automatico) */}
-      {/* 3. FOTOGRAFIE DI PARIGI (Scorrimento Automatico + Manuale) */}
-      <SlideshowSection data-animate>
+        <ParksPillsGrid>
+          <ParkPill data-animate>
+            <PillSparkle>✨</PillSparkle>
+            <PillText>DISNEYLAND PARK</PillText>
+          </ParkPill>
+
+          <ParkPill data-animate>
+            <PillSparkle>🎬</PillSparkle>
+            <PillText>WALT DISNEY STUDIOS</PillText>
+          </ParkPill>
+        </ParksPillsGrid>
+      </DaySection>
+
+      {/* 3. GALLERIA FOTOGRAFICA: QUEL GIORNO */}
+      <GallerySection data-animate>
+        <SectionBadge>FOTOGRAFIE</SectionBadge>
+        <SectionHeading>QUEL GIORNO</SectionHeading>
+
         <SlideshowCard
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
@@ -303,22 +266,19 @@ export default function Destinazione() {
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseLeave}
         >
-          {PARIS_PHOTOS.map((photo, idx) => {
+          {DISNEY_PHOTOS.map((photo, idx) => {
             const isCurrent = idx === currentPhotoIndex
             return (
               <PhotoLayer key={idx} $active={isCurrent}>
                 <img
                   src={photo.src}
-                  alt={photo.title}
+                  alt={photo.alt}
                   onError={(e) => {
                     if (photo.fallbackSrc && e.target.src !== photo.fallbackSrc) {
                       e.target.src = photo.fallbackSrc
                     }
                   }}
                 />
-                <CardCaption>
-                  <PlaceLabel>{photo.title}</PlaceLabel>
-                </CardCaption>
               </PhotoLayer>
             )
           })}
@@ -345,9 +305,9 @@ export default function Destinazione() {
           </GalleryNavBtn>
         </SlideshowCard>
 
-        {/* Minimal dot indicators (clickable) */}
+        {/* Minimal dot indicators */}
         <IndicatorsContainer>
-          {PARIS_PHOTOS.map((_, idx) => (
+          {DISNEY_PHOTOS.map((_, idx) => (
             <IndicatorDot
               key={idx}
               $active={idx === currentPhotoIndex}
@@ -356,54 +316,53 @@ export default function Destinazione() {
             />
           ))}
         </IndicatorsContainer>
-      </SlideshowSection>
+      </GallerySection>
 
-      {/* 4. COSA VEDREMO */}
-      <ItinerarySection data-animate>
-        <SectionBadge>ITINERARIO</SectionBadge>
-        <SectionHeading>COSA VEDREMO</SectionHeading>
+      {/* 4. I DUE PARCHI */}
+      <ParksSection data-animate>
+        <SectionBadge>I PARCHI</SectionBadge>
+        <SectionHeading>I DUE PARCHI</SectionHeading>
 
-        <PlacesGrid>
-          {WHAT_WE_WILL_SEE.map((item, idx) => (
-            <PlaceCard key={idx} data-animate>
-              <PlaceHeader>
-                <PlaceNumber>{String(idx + 1).padStart(2, "0")}</PlaceNumber>
-                <PlaceName>{item.title}</PlaceName>
-              </PlaceHeader>
-              <PlaceDesc>{item.desc}</PlaceDesc>
-            </PlaceCard>
-          ))}
-        </PlacesGrid>
+        <ParksCardsGrid>
+          <ParkCard data-animate>
+            <ParkCardTitle>DISNEYLAND PARK</ParkCardTitle>
+            <ParkCardDesc>
+              Il castello, le attrazioni e tutto quello che rende Disneyland quello che è.
+            </ParkCardDesc>
+          </ParkCard>
 
-        {/* Frase finale */}
-        <HumorBanner data-animate>
-          <HumorQuote>
-            "Se non abbiamo sbatti possiamo anche solo mangiare invece di visitare."
-          </HumorQuote>
-        </HumorBanner>
-      </ItinerarySection>
+          <ParkCard data-animate>
+            <ParkCardTitle>WALT DISNEY STUDIOS</ParkCardTitle>
+            <ParkCardDesc>
+              Il secondo parco, per vivere un'altra parte dell'esperienza Disney.
+            </ParkCardDesc>
+          </ParkCard>
+        </ParksCardsGrid>
+      </ParksSection>
 
-      {/* 5. DATE */}
-      <DatesSection data-animate>
-        <DatesGrid>
-          <DateCard>
-            <DateDay>01 LUGLIO 2027</DateDay>
-            <DateLabel>PARTENZA</DateLabel>
-          </DateCard>
-
-          <DateCard>
-            <DateDay>05 LUGLIO 2027</DateDay>
-            <DateLabel>RITORNO</DateLabel>
-          </DateCard>
-        </DatesGrid>
-      </DatesSection>
+      {/* 5. UN GIORNO TUTTO PER NOI */}
+      <SpecialSection data-animate>
+        <SpecialCard data-animate>
+          <SectionBadge>ESPERIENZA</SectionBadge>
+          <SpecialHeading>UN GIORNO TUTTO PER NOI</SpecialHeading>
+          <SpecialText>
+            Il 2 luglio sarà dedicato a Disneyland.
+            <br />
+            Un giorno per girare, vedere, ridere, fare foto e semplicemente goderci il momento.
+          </SpecialText>
+        </SpecialCard>
+      </SpecialSection>
 
       {/* 6. CHIUSURA */}
       <ClosingSection data-animate>
-        <ClosingTitle>PARIGI CI ASPETTA. 🇫🇷</ClosingTitle>
+        <ClosingDateBadge>02 LUGLIO 2027</ClosingDateBadge>
+        <ClosingQuote>
+          IL GIORNO PIÙ MAGICO DEL VIAGGIO. ✨
+        </ClosingQuote>
+        <ClosingSub>E QUESTO È SOLO L'INIZIO.</ClosingSub>
 
-        <NextStageButton to="/home">
-          <span>PROSSIMA TAPPA</span>
+        <HomeButton to="/home">
+          <span>TORNA ALLA HOME</span>
           <svg
             width="18"
             height="18"
@@ -417,9 +376,7 @@ export default function Destinazione() {
             <line x1="5" y1="12" x2="19" y2="12"></line>
             <polyline points="12 5 19 12 12 19"></polyline>
           </svg>
-        </NextStageButton>
-
-        <NextStageHint>Fase 2 • Volo (In preparazione)</NextStageHint>
+        </HomeButton>
       </ClosingSection>
     </PageContainer>
   )
@@ -474,7 +431,7 @@ const PageContainer = styled.div`
   }
 `
 
-const VideoContainer = styled.div`
+const BackgroundContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -485,7 +442,7 @@ const VideoContainer = styled.div`
   overflow: hidden;
   pointer-events: none;
 
-  video {
+  img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -495,7 +452,7 @@ const VideoContainer = styled.div`
   }
 `
 
-const VideoOverlay = styled.div`
+const BackgroundOverlay = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -503,10 +460,10 @@ const VideoOverlay = styled.div`
   bottom: 0;
   background: linear-gradient(
     180deg,
-    rgba(4, 7, 20, 0.42) 0%,
-    rgba(4, 7, 20, 0.28) 35%,
-    rgba(4, 7, 20, 0.62) 70%,
-    rgba(4, 7, 20, 0.9) 100%
+    rgba(4, 7, 20, 0.5) 0%,
+    rgba(4, 7, 20, 0.35) 35%,
+    rgba(4, 7, 20, 0.72) 70%,
+    rgba(4, 7, 20, 0.95) 100%
   );
   backdrop-filter: blur(1px);
 `
@@ -544,7 +501,7 @@ const BackBtn = styled(Link)`
   }
 `
 
-// 1. APERTURA
+// 1. HERO
 const HeroSection = styled.section`
   position: relative;
   z-index: 2;
@@ -568,13 +525,13 @@ const HeroContent = styled.div`
 `
 
 const HeroTitle = styled.h1`
-  font-size: clamp(48px, 12vw, 110px);
+  font-size: clamp(40px, 11vw, 100px);
   font-weight: 800;
   letter-spacing: clamp(6px, 2.5vw, 18px);
   color: #ffffff;
   margin: 0;
   text-transform: uppercase;
-  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.9), 0 2px 10px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.95), 0 2px 10px rgba(0, 0, 0, 0.85);
   line-height: 1.1;
 `
 
@@ -592,6 +549,16 @@ const HeroDate = styled.div`
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+`
+
+const HeroSubtitle = styled.p`
+  font-size: clamp(16px, 3.5vw, 22px);
+  font-weight: 500;
+  color: rgba(249, 249, 249, 0.9);
+  margin: 20px 0 0 0;
+  max-width: 600px;
+  line-height: 1.5;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
 `
 
 const ScrollHint = styled.div`
@@ -612,17 +579,7 @@ const ScrollHint = styled.div`
   }
 `
 
-// 2. DESTINAZIONE
-const DestinationSection = styled.section`
-  position: relative;
-  z-index: 2;
-  padding: 90px 24px 45px;
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: center;
-  box-sizing: border-box;
-`
-
+// Common Section Styles
 const SectionBadge = styled.div`
   display: inline-block;
   font-size: 12px;
@@ -633,35 +590,104 @@ const SectionBadge = styled.div`
   text-transform: uppercase;
 `
 
-const MainTitle = styled.h2`
-  font-size: clamp(32px, 7vw, 54px);
+const SectionHeading = styled.h2`
+  font-size: clamp(30px, 6.5vw, 48px);
   font-weight: 800;
   letter-spacing: clamp(3px, 1.2vw, 6px);
   color: #ffffff;
-  margin: 0 0 14px 0;
+  margin: 0 0 28px 0;
   text-transform: uppercase;
   text-shadow: 0 3px 20px rgba(0, 0, 0, 0.9);
 `
 
-const Subtitle = styled.p`
-  font-size: clamp(16px, 3.5vw, 22px);
-  font-weight: 400;
-  color: rgba(249, 249, 249, 0.85);
-  margin: 0;
-  line-height: 1.5;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-`
-
-// 3. FOTOGRAFIE DI PARIGI (Automatic Slideshow)
-const SlideshowSection = styled.section`
+// 2. IL NOSTRO GIORNO
+const DaySection = styled.section`
   position: relative;
   z-index: 2;
-  padding: 20px 24px 70px;
+  padding: 80px 24px 50px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  box-sizing: border-box;
+`
+
+const DayHeading = styled.h2`
+  font-size: clamp(26px, 6vw, 44px);
+  font-weight: 800;
+  letter-spacing: clamp(2.5px, 1vw, 5px);
+  color: #ffffff;
+  margin: 0 0 16px 0;
+  text-transform: uppercase;
+  text-shadow: 0 3px 20px rgba(0, 0, 0, 0.9);
+`
+
+const FormulaBadge = styled.div`
+  display: inline-block;
+  font-size: clamp(14px, 3.2vw, 17px);
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  color: #ffffff;
+  background: rgba(96, 165, 250, 0.2);
+  border: 1px solid rgba(96, 165, 250, 0.45);
+  padding: 8px 22px;
+  border-radius: 25px;
+  margin-bottom: 28px;
+  text-transform: uppercase;
+  box-shadow: 0 0 20px rgba(96, 165, 250, 0.35);
+`
+
+const ParksPillsGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-width: 640px;
+  margin: 0 auto;
+
+  @media (max-width: 580px) {
+    grid-template-columns: 1fr;
+  }
+`
+
+const ParkPill = styled.div`
+  background: rgba(14, 18, 30, 0.68);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 18px;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  transition: transform 250ms ease, border-color 250ms ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba(96, 165, 250, 0.5);
+  }
+`
+
+const PillSparkle = styled.span`
+  font-size: 20px;
+`
+
+const PillText = styled.span`
+  font-size: clamp(14px, 3.2vw, 17px);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+  text-transform: uppercase;
+`
+
+// 3. GALLERIA
+const GallerySection = styled.section`
+  position: relative;
+  z-index: 2;
+  padding: 50px 24px 60px;
   max-width: 900px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
   box-sizing: border-box;
 `
 
@@ -753,32 +779,6 @@ const GalleryNavBtn = styled.button`
   }
 `
 
-const CardCaption = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 16px 20px;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(4, 7, 20, 0.85) 100%
-  );
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  pointer-events: none;
-`
-
-const PlaceLabel = styled.span`
-  font-size: clamp(12px, 2.5vw, 15px);
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: #ffffff;
-  text-transform: uppercase;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
-`
-
 const IndicatorsContainer = styled.div`
   display: flex;
   align-items: center;
@@ -806,30 +806,20 @@ const IndicatorDot = styled.button`
   }
 `
 
-// 4. COSA VEDREMO
-const ItinerarySection = styled.section`
+// 4. I DUE PARCHI
+const ParksSection = styled.section`
   position: relative;
   z-index: 2;
-  padding: 40px 24px 70px;
-  max-width: 900px;
+  padding: 50px 24px 60px;
+  max-width: 860px;
   margin: 0 auto;
   text-align: center;
   box-sizing: border-box;
 `
 
-const SectionHeading = styled.h2`
-  font-size: clamp(28px, 6vw, 44px);
-  font-weight: 800;
-  letter-spacing: clamp(3px, 1.2vw, 6px);
-  color: #ffffff;
-  margin: 0 0 40px 0;
-  text-transform: uppercase;
-  text-shadow: 0 3px 20px rgba(0, 0, 0, 0.9);
-`
-
-const PlacesGrid = styled.div`
+const ParksCardsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr 1fr;
   gap: 20px;
   text-align: left;
 
@@ -839,144 +829,84 @@ const PlacesGrid = styled.div`
   }
 `
 
-const PlaceCard = styled.div`
-  background: rgba(14, 18, 30, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 16px;
-  padding: 24px;
+const ParkCard = styled.div`
+  background: rgba(14, 18, 30, 0.68);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  padding: 26px 24px;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.55);
   transition: transform 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
 
   &:hover {
     transform: translateY(-3px);
     border-color: rgba(96, 165, 250, 0.5);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.7);
   }
 `
 
-const PlaceHeader = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 10px;
-`
-
-const PlaceNumber = styled.span`
-  font-size: 13px;
+const ParkCardTitle = styled.h3`
+  font-size: clamp(18px, 4vw, 22px);
   font-weight: 800;
-  letter-spacing: 1.5px;
+  letter-spacing: 2px;
   color: #60a5fa;
-  background: rgba(96, 165, 250, 0.15);
-  border: 1px solid rgba(96, 165, 250, 0.3);
-  padding: 3px 8px;
-  border-radius: 8px;
-`
-
-const PlaceName = styled.h3`
-  font-size: clamp(16px, 3.5vw, 19px);
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  color: #ffffff;
-  margin: 0;
+  margin: 0 0 12px 0;
   text-transform: uppercase;
 `
 
-const PlaceDesc = styled.p`
-  font-size: clamp(14px, 3vw, 15px);
+const ParkCardDesc = styled.p`
+  font-size: clamp(14px, 3.2vw, 16px);
   line-height: 1.6;
-  color: rgba(249, 249, 249, 0.82);
+  color: rgba(249, 249, 249, 0.88);
   margin: 0;
 `
 
-const HumorBanner = styled.div`
-  margin-top: 45px;
-  padding: 24px 28px;
-  border-radius: 20px;
-  background: rgba(20, 24, 40, 0.75);
-  border: 1px dashed rgba(96, 165, 250, 0.4);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: transform 250ms ease;
-
-  &:hover {
-    transform: scale(1.01);
-  }
-`
-
-const HumorQuote = styled.p`
-  font-size: clamp(15px, 3.5vw, 19px);
-  font-weight: 600;
-  font-style: italic;
-  line-height: 1.5;
-  color: #93c5fd;
-  margin: 0;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-`
-
-// 5. DATE
-const DatesSection = styled.section`
+// 5. UN GIORNO TUTTO PER NOI
+const SpecialSection = styled.section`
   position: relative;
   z-index: 2;
   padding: 40px 24px 60px;
-  max-width: 720px;
+  max-width: 780px;
   margin: 0 auto;
+  text-align: center;
   box-sizing: border-box;
 `
 
-const DatesGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-
-  @media (max-width: 580px) {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
+const SpecialCard = styled.div`
+  background: rgba(16, 22, 40, 0.72);
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  border-radius: 20px;
+  padding: 36px 30px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.65), 0 0 30px rgba(96, 165, 250, 0.15);
 `
 
-const DateCard = styled.div`
-  background: rgba(14, 18, 30, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 16px;
-  padding: 26px 20px;
-  text-align: center;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-  transition: transform 250ms ease, border-color 250ms ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    border-color: rgba(96, 165, 250, 0.5);
-  }
-`
-
-const DateDay = styled.div`
-  font-size: clamp(17px, 3.5vw, 22px);
+const SpecialHeading = styled.h3`
+  font-size: clamp(22px, 5vw, 32px);
   font-weight: 800;
-  letter-spacing: 2px;
+  letter-spacing: clamp(2px, 1vw, 4px);
   color: #ffffff;
-  margin-bottom: 8px;
+  margin: 0 0 18px 0;
   text-transform: uppercase;
+  text-shadow: 0 3px 20px rgba(0, 0, 0, 0.9);
 `
 
-const DateLabel = styled.div`
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 2.5px;
-  color: #60a5fa;
-  text-transform: uppercase;
+const SpecialText = styled.p`
+  font-size: clamp(15px, 3.5vw, 18px);
+  line-height: 1.7;
+  color: rgba(249, 249, 249, 0.9);
+  margin: 0;
+  font-weight: 400;
 `
 
 // 6. CHIUSURA
 const ClosingSection = styled.section`
   position: relative;
   z-index: 2;
-  padding: 40px 24px calc(60px + env(safe-area-inset-bottom, 0px));
-  max-width: 600px;
+  padding: 50px 24px calc(70px + env(safe-area-inset-bottom, 0px));
+  max-width: 650px;
   margin: 0 auto;
   text-align: center;
   display: flex;
@@ -985,17 +915,36 @@ const ClosingSection = styled.section`
   box-sizing: border-box;
 `
 
-const ClosingTitle = styled.h2`
-  font-size: clamp(26px, 5.5vw, 40px);
+const ClosingDateBadge = styled.div`
+  display: inline-block;
+  font-size: 13px;
   font-weight: 800;
-  letter-spacing: 3px;
+  letter-spacing: 2.5px;
+  color: #60a5fa;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+`
+
+const ClosingQuote = styled.h2`
+  font-size: clamp(22px, 5vw, 36px);
+  font-weight: 800;
+  letter-spacing: 2px;
   color: #ffffff;
-  margin: 0 0 28px 0;
+  margin: 0 0 14px 0;
   text-transform: uppercase;
   text-shadow: 0 3px 20px rgba(0, 0, 0, 0.9);
 `
 
-const NextStageButton = styled(Link)`
+const ClosingSub = styled.p`
+  font-size: clamp(15px, 3.5vw, 19px);
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: #93c5fd;
+  margin: 0 0 32px 0;
+  text-transform: uppercase;
+`
+
+const HomeButton = styled(Link)`
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -1003,7 +952,7 @@ const NextStageButton = styled(Link)`
   color: #ffffff;
   border: 1px solid #0483ee;
   border-radius: 32px;
-  padding: 14px 32px;
+  padding: 14px 34px;
   font-size: 15px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -1021,11 +970,4 @@ const NextStageButton = styled(Link)`
   &:active {
     transform: scale(0.98);
   }
-`
-
-const NextStageHint = styled.span`
-  margin-top: 14px;
-  font-size: 12px;
-  color: rgba(249, 249, 249, 0.6);
-  letter-spacing: 1px;
 `

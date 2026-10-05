@@ -1,78 +1,46 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import styled, { keyframes } from "styled-components"
 import { Link } from "react-router-dom"
 
-const PARIS_PHOTOS = [
+const ACCOMMODATION_PHOTOS = [
   {
-    src: "/image/arco-con-vista-torre-eiffel.JPG.jpg",
-    fallbackSrc: "/images/arco-con-vista-torre-eiffel.JPG.jpg",
-    title: "TORRE EIFFEL"
+    src: "/image/casa-1.jpeg",
+    fallbackSrc: "/image/casa-1.jpg",
+    alt: "La nostra base a Parigi - Vista 1"
   },
   {
-    src: "/image/montmartre-base-cinematic.jpg",
-    fallbackSrc: "/image/montmartre-base-cinematic.jpg.jpg",
-    title: "MONTMARTRE"
+    src: "/image/casa-2.jpeg",
+    fallbackSrc: "/image/casa-2.jpg",
+    alt: "La nostra base a Parigi - Vista 2"
   },
   {
-    src: "/image/paris-louvre.jpg",
-    fallbackSrc: "/image/paris-louvre.jpg.jpg",
-    title: "LOUVRE"
+    src: "/image/casa-3.jpeg",
+    fallbackSrc: "/image/casa-3.jpg",
+    alt: "La nostra base a Parigi - Vista 3"
   },
   {
-    src: "/image/paris-tuileries.jpg",
-    fallbackSrc: "/image/paris-tuileries.jpg.jpg",
-    title: "TUILERIES"
-  },
-  {
-    src: "/image/paris-notredame.jpg",
-    fallbackSrc: "/image/paris-notredame.jpg.jpg",
-    title: "NOTRE-DAME"
-  },
-  {
-    src: "/image/paris-seine.jpg",
-    fallbackSrc: "/image/paris-seine.jpg.jpg",
-    title: "SENNA"
-  },
-  {
-    src: "/image/paris-quartier-latin.jpg",
-    fallbackSrc: "/image/paris-quartier-latin.jpg.jpg",
-    title: "QUARTIERE LATINO"
+    src: "/image/casa-4.jpeg",
+    fallbackSrc: "/image/casa-4.jpg",
+    alt: "La nostra base a Parigi - Vista 4"
   }
 ]
 
-const WHAT_WE_WILL_SEE = [
-  {
-    title: "TORRE EIFFEL",
-    desc: "Uno dei simboli di Parigi, il primo luogo che ci farà capire davvero di essere arrivati."
-  },
-  {
-    title: "MONTMARTRE",
-    desc: "Passeggeremo tra le strade di uno dei quartieri più caratteristici di Parigi."
-  },
-  {
-    title: "LOUVRE",
-    desc: "Visiteremo il Louvre e ci perderemo tra le sue sale."
-  },
-  {
-    title: "TUILERIES",
-    desc: "Una passeggiata attraverso i Giardini delle Tuileries."
-  },
-  {
-    title: "NOTRE-DAME",
-    desc: "Andremo a vedere Notre-Dame e la zona circostante."
-  },
-  {
-    title: "SENNA",
-    desc: "Passeggeremo lungo la Senna, godendoci alcuni degli scorci più belli della città."
-  },
-  {
-    title: "QUARTIERE LATINO",
-    desc: "Esploreremo il Quartiere Latino tra strade, piazze e atmosfera parigina."
-  }
+const IMPORTANT_INFOS = [
+  "Non è disponibile il deposito bagagli prima del check-in.",
+  "Non è disponibile il deposito bagagli dopo il check-out.",
+  "Non è disponibile il parcheggio.",
+  "Struttura non fumatori."
 ]
 
-export default function Destinazione() {
-  const videoRef = useRef(null)
+const STAY_DETAILS = [
+  { label: "INDIRIZZO", value: "84 Rue du Mont-Cenis, 75018 Paris" },
+  { label: "SOGGIORNO", value: "01 → 05 LUGLIO 2027" },
+  { label: "DURATA", value: "4 notti" },
+  { label: "CHECK-IN", value: "16:00" },
+  { label: "CHECK-OUT", value: "11:00" }
+]
+
+export default function Alloggio() {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
   const resumeTimerRef = useRef(null)
@@ -80,15 +48,6 @@ export default function Destinazione() {
   const touchStartYRef = useRef(0)
   const touchCurrentXRef = useRef(0)
   const isDraggingRef = useRef(false)
-
-  useEffect(() => {
-    // Autoplay kick for iOS Safari and mobile browsers
-    if (videoRef.current) {
-      videoRef.current.defaultMuted = true
-      videoRef.current.muted = true
-      videoRef.current.play().catch(() => {})
-    }
-  }, [])
 
   // Pause autoplay on manual interaction and re-activate 6 seconds after last interaction
   const pauseAndScheduleResume = () => {
@@ -102,13 +61,14 @@ export default function Destinazione() {
   }
 
   const goToNext = () => {
-    setCurrentPhotoIndex((prev) => (prev + 1) % PARIS_PHOTOS.length)
+    setCurrentPhotoIndex((prev) => (prev + 1) % ACCOMMODATION_PHOTOS.length)
     pauseAndScheduleResume()
   }
 
   const goToPrev = () => {
     setCurrentPhotoIndex(
-      (prev) => (prev - 1 + PARIS_PHOTOS.length) % PARIS_PHOTOS.length
+      (prev) =>
+        (prev - 1 + ACCOMMODATION_PHOTOS.length) % ACCOMMODATION_PHOTOS.length
     )
     pauseAndScheduleResume()
   }
@@ -118,12 +78,12 @@ export default function Destinazione() {
     pauseAndScheduleResume()
   }
 
-  // Automatic slideshow: changes slowly every 4.5 seconds with soft crossfade when not paused
+  // Automatic slow crossfade slideshow (4.5s) when not paused
   useEffect(() => {
     if (isPaused) return
 
     const timer = setInterval(() => {
-      setCurrentPhotoIndex((prev) => (prev + 1) % PARIS_PHOTOS.length)
+      setCurrentPhotoIndex((prev) => (prev + 1) % ACCOMMODATION_PHOTOS.length)
     }, 4500)
 
     return () => clearInterval(timer)
@@ -199,7 +159,7 @@ export default function Destinazione() {
     }
   }
 
-  // Scroll animations for standard content sections
+  // Scroll entrance transitions
   useEffect(() => {
     const elements = document.querySelectorAll("[data-animate]")
     const observer = new IntersectionObserver(
@@ -223,22 +183,19 @@ export default function Destinazione() {
 
   return (
     <PageContainer>
-      {/* Background Video */}
-      <VideoContainer>
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          poster="/images/destinazione-poster.jpg"
-        >
-          <source src="/video/video-destinazione.MP4" type="video/mp4" />
-          <source src="/videos/video-destinazione.mp4" type="video/mp4" />
-        </video>
-        <VideoOverlay />
-      </VideoContainer>
+      {/* Background Image: casa-1 */}
+      <BackgroundContainer>
+        <img
+          src="/image/casa-1.jpeg"
+          alt="Alloggio a Parigi"
+          onError={(e) => {
+            if (e.target.src.indexOf(".jpg") === -1) {
+              e.target.src = "/image/casa-1.jpg"
+            }
+          }}
+        />
+        <BackgroundOverlay />
+      </BackgroundContainer>
 
       {/* Floating Back Navigation */}
       <NavWrapper>
@@ -260,15 +217,16 @@ export default function Destinazione() {
         </BackBtn>
       </NavWrapper>
 
-      {/* 1. APERTURA (Hero Section) */}
+      {/* 1. APERTURA CINEMATOGRAFICA (Hero) */}
       <HeroSection>
         <HeroContent>
-          <HeroTitle>PARIGI</HeroTitle>
+          <HeroTitle>ALLOGGIO</HeroTitle>
           <HeroDate>01 — 05 LUGLIO 2027</HeroDate>
+          <HeroSubtitle>La nostra base a Parigi.</HeroSubtitle>
         </HeroContent>
 
         <ScrollHint>
-          <span>SCORRI PER ESPLORARE</span>
+          <span>SCORRI PER I DETTAGLI</span>
           <svg
             width="18"
             height="18"
@@ -284,16 +242,11 @@ export default function Destinazione() {
         </ScrollHint>
       </HeroSection>
 
-      {/* 2. DESTINAZIONE */}
-      <DestinationSection data-animate>
-        <SectionBadge>DESTINAZIONE</SectionBadge>
-        <MainTitle>PARIGI, FRANCIA</MainTitle>
-        <Subtitle>Una città da vivere insieme.</Subtitle>
-      </DestinationSection>
+      {/* 2. GALLERIA FOTOGRAFICA (casa-1 -> casa-2 -> casa-3 -> casa-4) */}
+      <GallerySection data-animate>
+        <SectionBadge>GALLERIA</SectionBadge>
+        <SectionHeading>DOVE DORMIREMO</SectionHeading>
 
-      {/* 3. FOTOGRAFIE DI PARIGI (Scorrimento Automatico) */}
-      {/* 3. FOTOGRAFIE DI PARIGI (Scorrimento Automatico + Manuale) */}
-      <SlideshowSection data-animate>
         <SlideshowCard
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
@@ -303,22 +256,19 @@ export default function Destinazione() {
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseLeave}
         >
-          {PARIS_PHOTOS.map((photo, idx) => {
+          {ACCOMMODATION_PHOTOS.map((photo, idx) => {
             const isCurrent = idx === currentPhotoIndex
             return (
               <PhotoLayer key={idx} $active={isCurrent}>
                 <img
                   src={photo.src}
-                  alt={photo.title}
+                  alt={photo.alt}
                   onError={(e) => {
                     if (photo.fallbackSrc && e.target.src !== photo.fallbackSrc) {
                       e.target.src = photo.fallbackSrc
                     }
                   }}
                 />
-                <CardCaption>
-                  <PlaceLabel>{photo.title}</PlaceLabel>
-                </CardCaption>
               </PhotoLayer>
             )
           })}
@@ -345,9 +295,9 @@ export default function Destinazione() {
           </GalleryNavBtn>
         </SlideshowCard>
 
-        {/* Minimal dot indicators (clickable) */}
+        {/* Minimal dot indicators */}
         <IndicatorsContainer>
-          {PARIS_PHOTOS.map((_, idx) => (
+          {ACCOMMODATION_PHOTOS.map((_, idx) => (
             <IndicatorDot
               key={idx}
               $active={idx === currentPhotoIndex}
@@ -356,51 +306,71 @@ export default function Destinazione() {
             />
           ))}
         </IndicatorsContainer>
-      </SlideshowSection>
+      </GallerySection>
 
-      {/* 4. COSA VEDREMO */}
-      <ItinerarySection data-animate>
-        <SectionBadge>ITINERARIO</SectionBadge>
-        <SectionHeading>COSA VEDREMO</SectionHeading>
+      {/* 3. INFORMAZIONI PRINCIPALI */}
+      <InfoSection data-animate>
+        <SectionBadge>ALLOGGIO</SectionBadge>
+        <SectionHeading>LA NOSTRA BASE</SectionHeading>
 
-        <PlacesGrid>
-          {WHAT_WE_WILL_SEE.map((item, idx) => (
-            <PlaceCard key={idx} data-animate>
-              <PlaceHeader>
-                <PlaceNumber>{String(idx + 1).padStart(2, "0")}</PlaceNumber>
-                <PlaceName>{item.title}</PlaceName>
-              </PlaceHeader>
-              <PlaceDesc>{item.desc}</PlaceDesc>
-            </PlaceCard>
+        <AddressCard data-animate>
+          <AddressStreet>84 Rue du Mont-Cenis</AddressStreet>
+          <AddressCity>75018 Paris, Francia</AddressCity>
+        </AddressCard>
+
+        <NightsBadge data-animate>
+          <span>4 NOTTI</span>
+        </NightsBadge>
+
+        <CheckGrid>
+          <CheckCard data-animate>
+            <CheckLabel>CHECK-IN</CheckLabel>
+            <CheckValue>01 LUGLIO 2027 — 16:00</CheckValue>
+          </CheckCard>
+
+          <CheckCard data-animate>
+            <CheckLabel>CHECK-OUT</CheckLabel>
+            <CheckValue>05 LUGLIO 2027 — 11:00</CheckValue>
+          </CheckCard>
+        </CheckGrid>
+      </InfoSection>
+
+      {/* 4. DETTAGLI DEL SOGGIORNO */}
+      <DetailsSection data-animate>
+        <SectionBadge>RIEPILOGO</SectionBadge>
+        <SectionHeading>DETTAGLI</SectionHeading>
+
+        <DetailsGrid>
+          {STAY_DETAILS.map((item, idx) => (
+            <DetailItem key={idx} data-animate>
+              <DetailLabel>{item.label}</DetailLabel>
+              <DetailValue>{item.value}</DetailValue>
+            </DetailItem>
           ))}
-        </PlacesGrid>
+        </DetailsGrid>
+      </DetailsSection>
 
-        {/* Frase finale */}
-        <HumorBanner data-animate>
-          <HumorQuote>
-            "Se non abbiamo sbatti possiamo anche solo mangiare invece di visitare."
-          </HumorQuote>
-        </HumorBanner>
-      </ItinerarySection>
+      {/* 5. INFORMAZIONI IMPORTANTI */}
+      <ImportantSection data-animate>
+        <SectionBadge>DA SAPERE</SectionBadge>
+        <SectionHeading>INFORMAZIONI IMPORTANTI</SectionHeading>
 
-      {/* 5. DATE */}
-      <DatesSection data-animate>
-        <DatesGrid>
-          <DateCard>
-            <DateDay>01 LUGLIO 2027</DateDay>
-            <DateLabel>PARTENZA</DateLabel>
-          </DateCard>
-
-          <DateCard>
-            <DateDay>05 LUGLIO 2027</DateDay>
-            <DateLabel>RITORNO</DateLabel>
-          </DateCard>
-        </DatesGrid>
-      </DatesSection>
+        <ImportantList>
+          {IMPORTANT_INFOS.map((info, idx) => (
+            <ImportantItem key={idx} data-animate>
+              <InfoIcon>•</InfoIcon>
+              <InfoText>{info}</InfoText>
+            </ImportantItem>
+          ))}
+        </ImportantList>
+      </ImportantSection>
 
       {/* 6. CHIUSURA */}
       <ClosingSection data-animate>
-        <ClosingTitle>PARIGI CI ASPETTA. 🇫🇷</ClosingTitle>
+        <ClosingQuote>
+          PER QUALCHE GIORNO, QUESTA SARÀ CASA NOSTRA. ❤️
+        </ClosingQuote>
+        <ClosingSub>PARIGI CI ASPETTA.</ClosingSub>
 
         <NextStageButton to="/home">
           <span>PROSSIMA TAPPA</span>
@@ -419,7 +389,7 @@ export default function Destinazione() {
           </svg>
         </NextStageButton>
 
-        <NextStageHint>Fase 2 • Volo (In preparazione)</NextStageHint>
+        <NextStageHint>Fase 4 • Disneyland (In preparazione)</NextStageHint>
       </ClosingSection>
     </PageContainer>
   )
@@ -474,7 +444,7 @@ const PageContainer = styled.div`
   }
 `
 
-const VideoContainer = styled.div`
+const BackgroundContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -485,7 +455,7 @@ const VideoContainer = styled.div`
   overflow: hidden;
   pointer-events: none;
 
-  video {
+  img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -495,7 +465,7 @@ const VideoContainer = styled.div`
   }
 `
 
-const VideoOverlay = styled.div`
+const BackgroundOverlay = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -503,10 +473,10 @@ const VideoOverlay = styled.div`
   bottom: 0;
   background: linear-gradient(
     180deg,
-    rgba(4, 7, 20, 0.42) 0%,
-    rgba(4, 7, 20, 0.28) 35%,
-    rgba(4, 7, 20, 0.62) 70%,
-    rgba(4, 7, 20, 0.9) 100%
+    rgba(4, 7, 20, 0.48) 0%,
+    rgba(4, 7, 20, 0.35) 35%,
+    rgba(4, 7, 20, 0.72) 70%,
+    rgba(4, 7, 20, 0.94) 100%
   );
   backdrop-filter: blur(1px);
 `
@@ -544,7 +514,7 @@ const BackBtn = styled(Link)`
   }
 `
 
-// 1. APERTURA
+// 1. HERO
 const HeroSection = styled.section`
   position: relative;
   z-index: 2;
@@ -568,7 +538,7 @@ const HeroContent = styled.div`
 `
 
 const HeroTitle = styled.h1`
-  font-size: clamp(48px, 12vw, 110px);
+  font-size: clamp(44px, 11vw, 105px);
   font-weight: 800;
   letter-spacing: clamp(6px, 2.5vw, 18px);
   color: #ffffff;
@@ -594,6 +564,14 @@ const HeroDate = styled.div`
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 `
 
+const HeroSubtitle = styled.p`
+  font-size: clamp(16px, 3.5vw, 22px);
+  font-weight: 500;
+  color: rgba(249, 249, 249, 0.88);
+  margin: 20px 0 0 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+`
+
 const ScrollHint = styled.div`
   position: absolute;
   bottom: calc(28px + env(safe-area-inset-bottom, 0px));
@@ -612,17 +590,7 @@ const ScrollHint = styled.div`
   }
 `
 
-// 2. DESTINAZIONE
-const DestinationSection = styled.section`
-  position: relative;
-  z-index: 2;
-  padding: 90px 24px 45px;
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: center;
-  box-sizing: border-box;
-`
-
+// Common Section Styles
 const SectionBadge = styled.div`
   display: inline-block;
   font-size: 12px;
@@ -633,35 +601,24 @@ const SectionBadge = styled.div`
   text-transform: uppercase;
 `
 
-const MainTitle = styled.h2`
-  font-size: clamp(32px, 7vw, 54px);
+const SectionHeading = styled.h2`
+  font-size: clamp(30px, 6.5vw, 48px);
   font-weight: 800;
   letter-spacing: clamp(3px, 1.2vw, 6px);
   color: #ffffff;
-  margin: 0 0 14px 0;
+  margin: 0 0 28px 0;
   text-transform: uppercase;
   text-shadow: 0 3px 20px rgba(0, 0, 0, 0.9);
 `
 
-const Subtitle = styled.p`
-  font-size: clamp(16px, 3.5vw, 22px);
-  font-weight: 400;
-  color: rgba(249, 249, 249, 0.85);
-  margin: 0;
-  line-height: 1.5;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-`
-
-// 3. FOTOGRAFIE DI PARIGI (Automatic Slideshow)
-const SlideshowSection = styled.section`
+// 2. GALLERIA
+const GallerySection = styled.section`
   position: relative;
   z-index: 2;
-  padding: 20px 24px 70px;
+  padding: 80px 24px 60px;
   max-width: 900px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
   box-sizing: border-box;
 `
 
@@ -753,32 +710,6 @@ const GalleryNavBtn = styled.button`
   }
 `
 
-const CardCaption = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 16px 20px;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(4, 7, 20, 0.85) 100%
-  );
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  pointer-events: none;
-`
-
-const PlaceLabel = styled.span`
-  font-size: clamp(12px, 2.5vw, 15px);
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: #ffffff;
-  text-transform: uppercase;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
-`
-
 const IndicatorsContainer = styled.div`
   display: flex;
   align-items: center;
@@ -806,146 +737,79 @@ const IndicatorDot = styled.button`
   }
 `
 
-// 4. COSA VEDREMO
-const ItinerarySection = styled.section`
+// 3. INFORMAZIONI PRINCIPALI
+const InfoSection = styled.section`
   position: relative;
   z-index: 2;
-  padding: 40px 24px 70px;
-  max-width: 900px;
+  padding: 50px 24px 60px;
+  max-width: 780px;
   margin: 0 auto;
   text-align: center;
   box-sizing: border-box;
 `
 
-const SectionHeading = styled.h2`
-  font-size: clamp(28px, 6vw, 44px);
-  font-weight: 800;
-  letter-spacing: clamp(3px, 1.2vw, 6px);
-  color: #ffffff;
-  margin: 0 0 40px 0;
-  text-transform: uppercase;
-  text-shadow: 0 3px 20px rgba(0, 0, 0, 0.9);
+const AddressCard = styled.div`
+  background: rgba(14, 18, 30, 0.68);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 18px;
+  padding: 24px 28px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.55);
 `
 
-const PlacesGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  text-align: left;
+const AddressStreet = styled.h3`
+  font-size: clamp(20px, 5vw, 28px);
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+`
 
-  @media (max-width: 768px) {
+const AddressCity = styled.p`
+  font-size: clamp(15px, 3.5vw, 19px);
+  color: #60a5fa;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  margin: 0;
+  text-transform: uppercase;
+`
+
+const NightsBadge = styled.div`
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #ffffff;
+  background: rgba(96, 165, 250, 0.18);
+  border: 1px solid rgba(96, 165, 250, 0.4);
+  padding: 6px 18px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+`
+
+const CheckGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+
+  @media (max-width: 600px) {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
   }
 `
 
-const PlaceCard = styled.div`
+const CheckCard = styled.div`
   background: rgba(14, 18, 30, 0.65);
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 16px;
-  padding: 24px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-  transition: transform 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
-
-  &:hover {
-    transform: translateY(-3px);
-    border-color: rgba(96, 165, 250, 0.5);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
-  }
-`
-
-const PlaceHeader = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 10px;
-`
-
-const PlaceNumber = styled.span`
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  color: #60a5fa;
-  background: rgba(96, 165, 250, 0.15);
-  border: 1px solid rgba(96, 165, 250, 0.3);
-  padding: 3px 8px;
-  border-radius: 8px;
-`
-
-const PlaceName = styled.h3`
-  font-size: clamp(16px, 3.5vw, 19px);
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  color: #ffffff;
-  margin: 0;
-  text-transform: uppercase;
-`
-
-const PlaceDesc = styled.p`
-  font-size: clamp(14px, 3vw, 15px);
-  line-height: 1.6;
-  color: rgba(249, 249, 249, 0.82);
-  margin: 0;
-`
-
-const HumorBanner = styled.div`
-  margin-top: 45px;
-  padding: 24px 28px;
-  border-radius: 20px;
-  background: rgba(20, 24, 40, 0.75);
-  border: 1px dashed rgba(96, 165, 250, 0.4);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  padding: 22px 20px;
+  text-align: center;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  transition: transform 250ms ease;
-
-  &:hover {
-    transform: scale(1.01);
-  }
-`
-
-const HumorQuote = styled.p`
-  font-size: clamp(15px, 3.5vw, 19px);
-  font-weight: 600;
-  font-style: italic;
-  line-height: 1.5;
-  color: #93c5fd;
-  margin: 0;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-`
-
-// 5. DATE
-const DatesSection = styled.section`
-  position: relative;
-  z-index: 2;
-  padding: 40px 24px 60px;
-  max-width: 720px;
-  margin: 0 auto;
-  box-sizing: border-box;
-`
-
-const DatesGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-
-  @media (max-width: 580px) {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-`
-
-const DateCard = styled.div`
-  background: rgba(14, 18, 30, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 16px;
-  padding: 26px 20px;
-  text-align: center;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
   transition: transform 250ms ease, border-color 250ms ease;
 
   &:hover {
@@ -954,29 +818,126 @@ const DateCard = styled.div`
   }
 `
 
-const DateDay = styled.div`
-  font-size: clamp(17px, 3.5vw, 22px);
-  font-weight: 800;
-  letter-spacing: 2px;
-  color: #ffffff;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-`
-
-const DateLabel = styled.div`
+const CheckLabel = styled.div`
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 2.5px;
   color: #60a5fa;
+  margin-bottom: 8px;
   text-transform: uppercase;
+`
+
+const CheckValue = styled.div`
+  font-size: clamp(15px, 3.5vw, 18px);
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #ffffff;
+`
+
+// 4. DETTAGLI DEL SOGGIORNO
+const DetailsSection = styled.section`
+  position: relative;
+  z-index: 2;
+  padding: 40px 24px 60px;
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: center;
+  box-sizing: border-box;
+`
+
+const DetailsGrid = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`
+
+const DetailItem = styled.div`
+  background: rgba(14, 18, 30, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  padding: 16px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 200ms ease;
+
+  &:hover {
+    transform: translateX(4px);
+    border-color: rgba(96, 165, 250, 0.4);
+  }
+
+  @media (max-width: 580px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 14px 18px;
+  }
+`
+
+const DetailLabel = styled.span`
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #60a5fa;
+  text-transform: uppercase;
+`
+
+const DetailValue = styled.span`
+  font-size: clamp(14px, 3.2vw, 16px);
+  font-weight: 600;
+  color: #ffffff;
+`
+
+// 5. INFORMAZIONI IMPORTANTI
+const ImportantSection = styled.section`
+  position: relative;
+  z-index: 2;
+  padding: 40px 24px 60px;
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: center;
+  box-sizing: border-box;
+`
+
+const ImportantList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+`
+
+const ImportantItem = styled.div`
+  background: rgba(14, 18, 30, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+`
+
+const InfoIcon = styled.span`
+  color: #60a5fa;
+  font-size: 20px;
+  line-height: 1;
+`
+
+const InfoText = styled.span`
+  font-size: clamp(14px, 3.2vw, 16px);
+  color: rgba(249, 249, 249, 0.88);
+  line-height: 1.5;
 `
 
 // 6. CHIUSURA
 const ClosingSection = styled.section`
   position: relative;
   z-index: 2;
-  padding: 40px 24px calc(60px + env(safe-area-inset-bottom, 0px));
-  max-width: 600px;
+  padding: 50px 24px calc(70px + env(safe-area-inset-bottom, 0px));
+  max-width: 650px;
   margin: 0 auto;
   text-align: center;
   display: flex;
@@ -985,14 +946,23 @@ const ClosingSection = styled.section`
   box-sizing: border-box;
 `
 
-const ClosingTitle = styled.h2`
-  font-size: clamp(26px, 5.5vw, 40px);
+const ClosingQuote = styled.h2`
+  font-size: clamp(22px, 5vw, 34px);
   font-weight: 800;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   color: #ffffff;
-  margin: 0 0 28px 0;
+  margin: 0 0 12px 0;
   text-transform: uppercase;
   text-shadow: 0 3px 20px rgba(0, 0, 0, 0.9);
+`
+
+const ClosingSub = styled.p`
+  font-size: clamp(16px, 3.5vw, 20px);
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #60a5fa;
+  margin: 0 0 28px 0;
+  text-transform: uppercase;
 `
 
 const NextStageButton = styled(Link)`
