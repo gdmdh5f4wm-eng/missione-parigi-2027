@@ -1,11 +1,9 @@
-import styled from "styled-components";
-import Slider from "react-slick";
+import styled from "styled-components"
+import Slider from "react-slick"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 
-
 export default function ImgSlider() {
-
   let settings = {
     dots: true,
     infinite: true,
@@ -15,20 +13,22 @@ export default function ImgSlider() {
     autoplay: true
   }
 
-
   return (
-  <Carousel {...settings}>
-    <Wrap>
-      <img src="/images/slider-badging.jpg" alt=""/>
-    </Wrap>
-    <Wrap>
-      <img src="/images/slider-badag.jpg" alt=""/>
-    </Wrap>
-    <Wrap>
-      <img src="/images/slider-scale.jpg" alt=""/>
-    </Wrap>
-  </Carousel>
-)
+    <Carousel {...settings}>
+      <Wrap>
+        <img src="/images/slider-badging.jpg" alt="In evidenza su Disney+" />
+      </Wrap>
+      <Wrap>
+        <img src="/images/slider-badag.jpg" alt="In evidenza su Disney+" />
+      </Wrap>
+      <Wrap>
+        <img src="/images/slider-scale.jpg" alt="In evidenza su Disney+" />
+      </Wrap>
+      <Wrap>
+        <img src="/images/arco-con-vista-torre-eiffel.JPG" alt="In evidenza su Disney+" />
+      </Wrap>
+    </Carousel>
+  )
 }
 
 const Carousel = styled(Slider)`
@@ -52,7 +52,6 @@ const Carousel = styled(Slider)`
   button {
     z-index: 1;
   }
-
 `
 const Wrap = styled.div`
   cursor: pointer;

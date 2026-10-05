@@ -1,7 +1,8 @@
 import styled from "styled-components"
 import ImgSlider from "./ImgSlider"
 import Viewers from "./Viewers"
-import { useEffect } from "react"
+import DestinazioneSection from "./DestinazioneSection"
+import { useEffect, useRef } from "react"
 import db from "../firebase"
 import Recommends from "./Recommends"
 import NewDisney from "./NewDisney"
@@ -10,59 +11,85 @@ import Trending from "./Trending"
 import { useDispatch, useSelector } from "react-redux"
 import { setMovies } from "../features/movie/movieSlice"
 import { selectUserName } from "../features/user/userSlice"
+import { getCategorizedMovies } from "../disneyMoviesData"
 
+export default function Home() {
+  const dispatch = useDispatch()
+  const userName = useSelector(selectUserName)
+  const isLoadedRef = useRef(false)
 
+  useEffect(() => {
+    let unsubscribe = null
 
-export default function Home(props) {
-  
-const dispatch = useDispatch()
-const userName = useSelector(selectUserName)
-let recommends = []
-let newDisneys = []
-let originals = []
-let trending = []
+    try {
+      unsubscribe = db.collection('movies').onSnapshot(
+        (snapshot) => {
+          let recommends = []
+          let newDisneys = []
+          let originals = []
+          let trending = []
 
-useEffect(() => {
-  db.collection('movies').onSnapshot((snapshot) => {
-    snapshot.docs.map((doc) => {
-      switch(doc.data().type) {
-        case 'recommend':
-          // recommends.push({id: doc.id, ...doc.data()})
-          recommends = [...recommends, {id: doc.id, ...doc.data()}]
-          break;
-        case 'new':
-          // newDisneys.push({id: doc.id, ...doc.data()})
-          newDisneys = [...newDisneys, {id: doc.id, ...doc.data()}]
-          break;
-        case 'original':
-          // originals.push({id: doc.id, ...doc.data()})
-          originals = [...originals, {id: doc.id, ...doc.data()}]
-          break;
-        case 'trending':
-          // trending.push({id: doc.id, ...doc.data()})
-          trending = [...trending, {id: doc.id, ...doc.data()}]
-          break;
-      
+          snapshot.docs.forEach((doc) => {
+            const data = doc.data()
+            switch (data.type) {
+              case 'recommend':
+                recommends.push({ id: doc.id, ...data })
+                break
+              case 'new':
+                newDisneys.push({ id: doc.id, ...data })
+                break
+              case 'original':
+                originals.push({ id: doc.id, ...data })
+                break
+              case 'trending':
+                trending.push({ id: doc.id, ...data })
+                break
+              default:
+                break
+            }
+          })
 
+          if (recommends.length || newDisneys.length || originals.length || trending.length) {
+            isLoadedRef.current = true
+            dispatch(
+              setMovies({
+                recommend: recommends,
+                newDisney: newDisneys,
+                original: originals,
+                trending: trending
+              })
+            )
+          } else if (!isLoadedRef.current) {
+            const localData = getCategorizedMovies()
+            dispatch(setMovies(localData))
+          }
+        },
+        (error) => {
+          console.warn("Firestore error reading movies:", error.message)
+          if (!isLoadedRef.current) {
+            const localData = getCategorizedMovies()
+            dispatch(setMovies(localData))
+          }
+        }
+      )
+    } catch (err) {
+      console.warn("Firestore initialization error:", err)
+      const localData = getCategorizedMovies()
+      dispatch(setMovies(localData))
+    }
+
+    return () => {
+      if (typeof unsubscribe === 'function') {
+        unsubscribe()
       }
-    })
-  
-
-  dispatch(setMovies({
-    recommend: recommends,
-    newDisney: newDisneys,
-    original: originals,
-    trending: trending
-
-  })
-  )
-})
-}, [userName])
+    }
+  }, [userName, dispatch])
 
   return (
     <Container>
       <ImgSlider />
       <Viewers />
+      <DestinazioneSection />
       <Recommends />
       <NewDisney />
       <Originals />

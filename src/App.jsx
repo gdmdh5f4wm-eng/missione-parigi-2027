@@ -4,27 +4,27 @@ import Header from './components/Header'
 import Home from './components/Home'
 import Detail from './components/Detail'
 import Login from './components/Login'
+import Destinazione from './components/Destinazione'
 import {
   BrowserRouter as Router,
   Routes,
-  Route,
-  Link
-} from "react-router-dom";
-
+  Route
+} from "react-router-dom"
 
 function App() {
   return (
-  <div className="App">
-    <Router>
-      <Header />
+    <div className="App">
+      <Router>
+        <Header />
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/destinazione" element={<Destinazione />} />
           <Route path="/detail/:id" element={<Detail />} />
         </Routes>
-    </Router>
+      </Router>
     </div>
-    )
+  )
 }
 
 export default App

@@ -1,0 +1,8 @@
+{
+  "name": "Disney+ Clone",
+  "description": "Clone della piattaforma streaming Disney+ con film, serie originali, consigliati e trailer.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
