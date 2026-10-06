@@ -372,7 +372,7 @@ export default function Alloggio() {
         </ClosingQuote>
         <ClosingSub>PARIGI CI ASPETTA.</ClosingSub>
 
-        <NextStageButton to="/home">
+        <NextStageButton to="/disneyland">
           <span>PROSSIMA TAPPA</span>
           <svg
             width="18"
@@ -389,7 +389,7 @@ export default function Alloggio() {
           </svg>
         </NextStageButton>
 
-        <NextStageHint>Fase 4 • Disneyland (In preparazione)</NextStageHint>
+        <NextStageHint>Fase 4 • Disneyland</NextStageHint>
       </ClosingSection>
     </PageContainer>
   )

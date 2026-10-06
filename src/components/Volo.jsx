@@ -183,7 +183,7 @@ export default function Volo() {
       <ClosingSection data-animate>
         <ClosingTitle>PARIGI, STIAMO ARRIVANDO. ✈️</ClosingTitle>
 
-        <NextStageButton to="/home">
+        <NextStageButton to="/alloggio">
           <span>PROSSIMA TAPPA</span>
           <svg
             width="18"
@@ -200,7 +200,7 @@ export default function Volo() {
           </svg>
         </NextStageButton>
 
-        <NextStageHint>Fase 3 • Alloggio (In preparazione)</NextStageHint>
+        <NextStageHint>Fase 3 • Alloggio</NextStageHint>
       </ClosingSection>
     </PageContainer>
   )

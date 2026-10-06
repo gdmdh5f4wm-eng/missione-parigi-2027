@@ -1,86 +1,61 @@
 export const fallbackMovies = [
   // Consigliati per te
   {
-    id: "mandalorian",
-    title: "The Mandalorian",
-    subtitle: "2019 • 2 Stagioni • Fantascienza, Azione e avventura",
-    description: "Dopo la caduta dell'Impero Galattico, un pistolero solitario si fa strada nei remoti meandri di una galassia senza legge.",
+    id: "bagaglio-a-mano",
+    title: "BAGAGLIO A MANO",
+    subtitle: "TUTTO QUELLO CHE DOBBIAMO SAPERE PRIMA DI PARTIRE",
+    description: "Le dimensioni, il peso e tutte le regole ufficiali ITA Airways per preparare al meglio il nostro bagaglio a mano per il viaggio.",
     type: "recommend",
-    cardImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/49B92C046117E14B9243A6942E5637482D23A622A69985F2CFD5EACE2D08E816/scale?width=1440&aspectRatio=1.78&format=jpeg",
-    titleImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/2A60548171120DE7A01684B309A208D80F33A9D0A86FD8A3C51A18FE91B1F3EE/scale?width=1440&aspectRatio=1.78&format=png",
-    backgroundImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/B409C2A425D58C32D822A29C8CAD4E4140A95A218BC6B65074B97BE052261F48/scale?width=1440&aspectRatio=1.78&format=jpeg"
+    cardImg: "/image/valigia-.jpg",
+    titleImg: "",
+    backgroundImg: "/images/home-background.png",
+    isBaggageGuide: true
   },
   {
-    id: "soul",
-    title: "Soul",
-    subtitle: "2020 • 1h 47m • Famiglia, Commedia, Fantastico, Animazione",
-    description: "Dopo aver ottenuto il concerto della vita, un pianista jazz newyorkese si ritrova improvvisamente intrappolato in una strana dimensione tra la Terra e l'aldilà.",
+    id: "documenti",
+    title: "DOCUMENTI",
+    subtitle: "TUTTO QUELLO CHE DOBBIAMO AVERE PRIMA DI PARTIRE",
+    description: "Tutti i documenti e le informazioni necessarie per il nostro viaggio a Parigi dal 1 al 5 luglio 2027.",
     type: "recommend",
-    cardImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/C0A883EAB54DDDC245AD67B45925D23D53977AB86767072E5D8E94FB7EAF15A4/scale?width=1440&aspectRatio=1.78&format=jpeg",
-    titleImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/8AA41981F4B416348BEA7E64FF1920F0D22F0BE401BA98E6AB29BCE2B155B78E/scale?width=1440&aspectRatio=1.78&format=png",
-    backgroundImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/7F70461BE6D2B771A9A96B0798C0767576FF458A329712B00F3A229E653F7768/scale?width=1440&aspectRatio=1.78&format=jpeg"
+    cardImg: "/image/documenti-.jpg",
+    titleImg: "",
+    backgroundImg: "/images/home-background.png",
+    isDocumentiGuide: true
   },
   {
-    id: "wandavision",
-    title: "WandaVision",
-    subtitle: "2021 • 1 Stagione • Fantascienza, Commedia, Drammatico",
-    description: "Conducendo vite suburbane apparentemente ideali, gli esseri dotati di superpoteri Wanda e Visione iniziano a sospettare che le cose non siano come sembrano.",
+    id: "metro-rer",
+    title: "METRO & RER",
+    subtitle: "METRO, RER E IL NOSTRO VIAGGIO VERSO DISNEYLAND",
+    description: "Come ci muoveremo a Parigi dal nostro alloggio a Montmartre: biglietti, linee utili e il percorso completo per Disneyland Paris.",
     type: "recommend",
-    cardImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/34CEEBCA211FC163A0428B3654E25AA43D2A180E249E6953C49E9E06E4FB7E5B/scale?width=1440&aspectRatio=1.78&format=jpeg",
-    titleImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/4D615147854BE0726DE4A6B1A8DFD0C2C3AE58B43CD62F188B6E8DB4EF78B314/scale?width=1440&aspectRatio=1.78&format=png",
-    backgroundImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/31EE829E1665485E7B7882FE6F4CA6A25EC54BE2FE6F4CA6A25EC54BE2F7E41C/scale?width=1440&aspectRatio=1.78&format=jpeg"
+    cardImg: "/image/biglietti-metro-.png",
+    titleImg: "",
+    backgroundImg: "/images/home-background.png",
+    isMetroRerGuide: true
   },
   {
-    id: "luca",
-    title: "Luca",
-    subtitle: "2021 • 1h 35m • Famiglia, Fantastico, Commedia, Animazione",
-    description: "Ambientato in una splendida cittadina costiera della Riviera ligure, un giovane ragazzo vive un'estate indimenticabile tra gelati, pasta e corse in scooter.",
+    id: "power-bank",
+    title: "POWER BANK",
+    subtitle: "QUELLO CHE DOBBIAMO SAPERE PRIMA DI SALIRE A BORDO",
+    description: "Tutte le regole ufficiali per portare il power bank in volo con ITA Airways: capacità in Wh, trasporto in cabina e sicurezza a bordo.",
     type: "recommend",
-    cardImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/87F17E5E4E81604B97D3C6BC597653ED10DF2229FD1D55E640B2DE2E1E5C4927/scale?width=1440&aspectRatio=1.78&format=jpeg",
-    titleImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/092E4628E0CFDE4215B4957D7A04A81CDD336585DA0C95C622C9B90D8CA63065/scale?width=1440&aspectRatio=1.78&format=png",
-    backgroundImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/44BB0D1C6947D76B131DDEB48F6D6955099AE95F37510255160E024F44203673/scale?width=1440&aspectRatio=1.78&format=jpeg"
+    cardImg: "/image/power-bank-.png",
+    titleImg: "",
+    backgroundImg: "/images/home-background.png",
+    isPowerBankGuide: true
   },
 
-  // Novità
+  // Novità (Solo Premier Access Ultimate)
   {
-    id: "raya",
-    title: "Raya and the Last Dragon",
-    subtitle: "2021 • 1h 52m • Famiglia, Fantastico, Animazione, Azione e avventura",
-    description: "Raya, una guerriera, intraprende un viaggio alla ricerca dell'ultimo drago leggendario per salvare il frammentato regno di Kumandra da un'antica forza oscura.",
+    id: "premier-access",
+    title: "PREMIER ACCESS",
+    subtitle: "MASSIMA LIBERTÀ",
+    description: "Premier Access Ultimate: 1 utilizzo della corsia rapida per ciascuna delle attrazioni idonee e disponibili in entrambi i Parchi.",
     type: "new",
-    cardImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/A748A08151D87A656B23C64188F3EDC4CD12F35DF6C9781D9BC73A3C0B1B3673/scale?width=1440&aspectRatio=1.78&format=jpeg",
-    titleImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/32777894F455A260904E0716A8C2B32454641E804369EECA621BE1F8C95183E2/scale?width=1440&aspectRatio=1.78&format=png",
-    backgroundImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/E09CCF148B9CA1CAFFBC11B86CF364FE406F95EAB8E19B210747E2097A19F8DB/scale?width=1440&aspectRatio=1.78&format=jpeg"
-  },
-  {
-    id: "cruella",
-    title: "Cruella",
-    subtitle: "2021 • 2h 14m • Commedia, Crime",
-    description: "Un lungometraggio live-action che segue le origini di una giovane Cruella de Vil durante la rivoluzione punk rock nella Londra degli anni '70.",
-    type: "new",
-    cardImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/D208DAFFB326F222851D333919EDDA873E47EB9115DF509AB1DE467FD7CA7953/scale?width=1440&aspectRatio=1.78&format=jpeg",
-    titleImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/694FE37367ECB90B9BF1E2D642878AC9C3B4E347A22180F53F3F56EA1837C517/scale?width=1440&aspectRatio=1.78&format=png",
-    backgroundImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/BC862F8A437C0F4A0A47B784DE3D0EEFF994A1F6DB5A68AE8813C161D7DEE5BE/scale?width=1440&aspectRatio=1.78&format=jpeg"
-  },
-  {
-    id: "loki",
-    title: "Loki",
-    subtitle: "2021 • 2 Stagioni • Fantascienza, Azione e avventura, Fantastico",
-    description: "L'imprevedibile Dio dell'Inganno, Loki, riprende il suo ruolo in una nuova serie ambientata subito dopo gli eventi di Avengers: Endgame.",
-    type: "new",
-    cardImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/508E677E696143653810447F23E118A447E2B08920C8A97A2EBE196E7EB5BD48/scale?width=1440&aspectRatio=1.78&format=jpeg",
-    titleImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/8BE8DF80998B4B87C2BF86C3ED1D9253457D4F72BBEE7D601E8746F972DF8D4C/scale?width=1440&aspectRatio=1.78&format=png",
-    backgroundImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/F911D005A3194B4E26BEF79727B42EC9DB17215B4687654C43CA9323F82EBE03/scale?width=1440&aspectRatio=1.78&format=jpeg"
-  },
-  {
-    id: "shangchi",
-    title: "Shang-Chi and the Legend of the Ten Rings",
-    subtitle: "2021 • 2h 12m • Azione e avventura, Fantastico",
-    description: "Shang-Chi deve affrontare il passato che credeva essersi lasciato alle spalle quando viene attirato nella rete della misteriosa organizzazione dei Dieci Anelli.",
-    type: "new",
-    cardImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/E65ACAF5FA2822B4D7DF2E4E6D25EBCE8FD7F9CD274A07612E02D58E298912A0/scale?width=1440&aspectRatio=1.78&format=jpeg",
-    titleImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/32777894F455A260904E0716A8C2B32454641E804369EECA621BE1F8C95183E2/scale?width=1440&aspectRatio=1.78&format=png",
-    backgroundImg: "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/8AA41981F4B416348BEA7E64FF1920F0D22F0BE401BA98E6AB29BCE2B155B78E/scale?width=1440&aspectRatio=1.78&format=jpeg"
+    cardImg: "/image/disney-f-2-.jpg",
+    titleImg: "",
+    backgroundImg: "/images/home-background.png",
+    isPremierAccess: true
   },
 
   // Originali

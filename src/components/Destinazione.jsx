@@ -402,7 +402,7 @@ export default function Destinazione() {
       <ClosingSection data-animate>
         <ClosingTitle>PARIGI CI ASPETTA. 🇫🇷</ClosingTitle>
 
-        <NextStageButton to="/home">
+        <NextStageButton to="/volo">
           <span>PROSSIMA TAPPA</span>
           <svg
             width="18"
@@ -419,7 +419,7 @@ export default function Destinazione() {
           </svg>
         </NextStageButton>
 
-        <NextStageHint>Fase 2 • Volo (In preparazione)</NextStageHint>
+        <NextStageHint>Fase 2 • Volo</NextStageHint>
       </ClosingSection>
     </PageContainer>
   )
